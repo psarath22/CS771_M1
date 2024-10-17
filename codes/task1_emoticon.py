@@ -593,7 +593,7 @@ plt.plot([int(p * 100) for p in train_percentages], valid_accuracies, label='Val
 plt.ylim(0.4, 1.02)
 plt.xlabel('Percentage of Training Data Used')
 plt.ylabel('Accuracy')
-plt.title('Model Accuracy vs. Training Data Size')
+plt.title('DNN Model Accuracy vs. Training Data Size')
 plt.legend()
 plt.grid(True)
 plt.show()
