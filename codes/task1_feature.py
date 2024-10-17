@@ -330,7 +330,7 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.svm import SVC
 from sklearn.linear_model import LogisticRegression
 import requests
-
+np.random.seed(0)
 
 # URL of the raw .npz file
 url_train = "https://github.com/psarath22/CS771_M1/raw/main/datasets/train/train_feature.npz"
@@ -394,7 +394,7 @@ X_valid = np.array([feat.flatten() for feat in X_valid])
 X_test = np.array([feat.flatten() for feat in X_test])
 
 from sklearn.decomposition import PCA
-n_components = 200
+n_components = 150
 pca = PCA(n_components=n_components)
 X_train = pca.fit_transform(X_train)
 X_valid = pca.transform(X_valid)
@@ -640,7 +640,91 @@ plt.show()
 
 """# ***Deep Neural Network***"""
 
+from sklearn.metrics import f1_score, confusion_matrix
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense, Embedding, Flatten
 
+# Define and compile the model
+model = Sequential()
+# Input layer: Since the PCA output has n_components features
+model.add(Dense(32, activation='relu', input_dim=n_components))  # First hidden layer with 32 neurons
+model.add(Dense(24, activation='relu'))  # Second hidden layer with 24 neurons
+model.add(Dense(1, activation='sigmoid'))  # Output layer for binary classification
 
+model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
 
+# Fit the model
+history = model.fit(X_train, train_feat_Y, epochs=10, batch_size=32, validation_data=(X_valid, valid_feat_Y))
+
+# Evaluate the model on training and validation data
+train_loss, train_accuracy = model.evaluate(X_train, train_feat_Y, verbose=0)
+valid_loss, valid_accuracy = model.evaluate(X_valid, valid_feat_Y, verbose=0)
+
+# Predictions and calculate F1 score and confusion matrix
+valid_predictions = (model.predict(X_valid) > 0.5).astype("int32")
+f1 = f1_score(valid_feat_Y, valid_predictions)
+
+# Print accuracies and F1 score
+model.summary()
+
+print(f"Training Accuracy: {train_accuracy:.4f}")
+print(f"Validation Accuracy: {valid_accuracy:.4f}")
+print(f"F1 Score: {f1:.4f}")
+
+# Split the training data into different sizes (20%, 40%, 60%, 80%, 100%)
+train_percentages = [0.2, 0.4, 0.6, 0.8, 1.0]
+train_accuracies = []
+valid_accuracies = []
+
+# Analyze model performance with different training set sizes
+for percentage in train_percentages:
+    print(f"Training on {percentage * 100}% of the data")
+    if percentage == 1.0:
+        X_train_subset = X_train
+        Y_train_subset = train_feat_Y
+    else:
+        X_train_subset, _, Y_train_subset, _ = train_test_split(X_train, train_feat_Y, train_size=percentage, random_state=42)
+
+    # Define and compile the model
+    model = Sequential()
+    # Input layer: Since the PCA output has n_components features
+    model.add(Dense(32, activation='relu', input_dim=n_components))  # First hidden layer with 32 neurons
+    model.add(Dense(24, activation='relu'))  # Second hidden layer with 24 neurons
+    model.add(Dense(1, activation='sigmoid'))  # Output layer for binary classification
+    model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy'])
+    # Fit the model
+    model.fit(X_train_subset, Y_train_subset, epochs=10, batch_size=32, validation_data=(X_valid, valid_feat_Y), verbose=0)
+
+    # Evaluate the model on training and validation data
+    train_loss, train_accuracy = model.evaluate(X_train_subset, Y_train_subset, verbose=0)
+    valid_loss, valid_accuracy = model.evaluate(X_valid, valid_feat_Y, verbose=0)
+
+    # Store accuracies
+    train_accuracies.append(train_accuracy)
+    valid_accuracies.append(valid_accuracy)
+
+# Create a DataFrame to print the table
+data = {
+    "Percentage": [int(p * 100) for p in train_percentages],
+    "Training Accuracy": train_accuracies,
+    "Validation Accuracy": valid_accuracies
+}
+
+accuracy_df = pd.DataFrame(data)
+print(accuracy_df)
+
+# Plot the accuracies
+plt.plot([int(p * 100) for p in train_percentages], train_accuracies, label='Training Accuracy', color='green', marker='o')
+plt.plot([int(p * 100) for p in train_percentages], valid_accuracies, label='Validation Accuracy', color='red', marker='o')
+
+# Add labels and title
+plt.ylim(0.4, 1.02)
+plt.xlabel('Percentage of Training Data Used')
+plt.ylabel('Accuracy')
+plt.title('DNN Model Accuracy vs. Training Data Size')
+plt.legend()
+plt.grid(True)
+plt.show()
+
+model.summary()
 
