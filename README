@@ -25,13 +25,15 @@ mini-project-1/
 │       └── valid_text_seq.csv
 ├── report
 │   └── dump
+├── 66.ipynb
+├── 66.py
 ├── README
 ├── description.pdf
 ├── read_data.py
-├── 66.ipynb
-└── 66.py
+└── your_group_no.py
 
 
+Instructions given by Instructor:
 1. read_data.py files contains the code to read the datasets.
 2. your_group_no.py file is just a dummy file. You may change it as you want. 
 3. You may crate multiple python files according to your requirements but you must link them to your_group_no.py
