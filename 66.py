@@ -538,7 +538,7 @@ logreg_classifier.fit(train_combined_X, train_combined_Y)
 # Predict classes for validation data
 valid_predictions_combined = logreg_classifier.predict(valid_combined_X)
 train_predictions_combined = logreg_classifier.predict(train_combined_X)
-test_predictions_combined = logreg_classifier.predict(train_combined_X)
+test_predictions_combined = logreg_classifier.predict(test_combined_X)
 
 valid_predictions_combined = valid_predictions_combined.flatten()
 train_predictions_combined = train_predictions_combined.flatten()
