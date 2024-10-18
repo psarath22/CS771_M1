@@ -1,6 +1,15 @@
 # Directory strecture
 
 mini-project-1/
+├── codes
+│   ├── Task1_emoticon.ipynb
+│   ├── Task1_feat.ipynb
+│   ├── Task1_seq.ipynb
+│   ├── Task2_combined_data.ipynb
+│   ├── task1_emoticon.py
+│   ├── task1_feat.py
+│   ├── task1_seq.py
+│   └── task2_combined_data.py
 ├── datasets
 │   ├── test
 │   │   ├── test_emoticon.csv
@@ -14,9 +23,13 @@ mini-project-1/
 │       ├── valid_emoticon.csv
 │       ├── valid_feature.npz
 │       └── valid_text_seq.csv
-├── read_data.py
+├── report
+│   └── dump
 ├── README
-└── your_group_no.py
+├── description.pdf
+├── read_data.py
+├── 66.ipynb
+└── 66.py
 
 
 1. read_data.py files contains the code to read the datasets.
