@@ -23,13 +23,12 @@ mini-project-1/
 │       ├── valid_emoticon.csv
 │       ├── valid_feature.npz
 │       └── valid_text_seq.csv
-├── report
-│   └── dump
 ├── 66.ipynb
 ├── 66.py
 ├── README
 ├── description.pdf
 ├── read_data.py
+├── requirements.txt
 └── your_group_no.py
 
 
