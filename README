@@ -23,6 +23,11 @@ mini-project-1/
 │       ├── valid_emoticon.csv
 │       ├── valid_feature.npz
 │       └── valid_text_seq.csv
+├── predictions
+│   ├── pred_combined.txt
+│   ├── pred_deepfeat.txt
+│   ├── pred_emoticon.txt
+│   └── pred_textseq.txt
 ├── 66.ipynb
 ├── 66.py
 ├── README
