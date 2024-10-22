@@ -1,0 +1,11 @@
+1. Python Environment: Ensure you have a working Python environment (Python 3.7 or later recommended).
+
+2. Required Libraries: Install the following libraries to run the project:
+
+-> numpy
+-> pandas
+-> matplotlib
+-> tensorflow
+-> scikit-learn
+-> requests
+-> keras
