@@ -569,8 +569,8 @@ def save_predictions_to_file(predictions, filename):
         for pred in predictions:
             f.write(f"{pred}\n")# saving prediction to text files
 
-save_predictions_to_file(test_predictions_feat, "pred_feat.txt")
+save_predictions_to_file(test_predictions_feat, "pred_deepfeat.txt")
 save_predictions_to_file(test_predictions_emoticon, "pred_emoticon.txt")
-save_predictions_to_file(test_predictions_seq, "pred_text.txt")
+save_predictions_to_file(test_predictions_seq, "pred_textseq.txt")
 save_predictions_to_file(test_predictions_combined, "pred_combined.txt")
 
